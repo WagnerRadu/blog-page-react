@@ -42,12 +42,16 @@ export default function Modal({
                 </div>
                 <div className="modal-button-container">
                     <button className="button" id="closeModalBtn" onClick={closeModal}>CANCEL</button>
-                    {/* <button className="button bg-pink" >SAVE</button> */}
+                    <button className="button bg-pink" >SAVE</button>
                     {article.id === 0 && (
-                        <button className="button bg-pink" onClick={addArticle}>ADD</button>
+                        <button onClick={addarticle} type="button">
+                            Add
+                        </button>
                     )}
                     {article.id !== 0 && (
-                        <button className="button bg-pink" onClick={updateArticle}>UPDATE</button>
+                        <button onClick={updatearticle} type="button">
+                            Update
+                        </button>
                     )}
                 </div>
             </div>

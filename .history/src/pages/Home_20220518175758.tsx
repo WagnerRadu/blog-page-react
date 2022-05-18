@@ -143,19 +143,10 @@ class Home extends Component<Props, State> {
     const json = await response.json();
     console.log(json);
     this.closeModal();
-    this.fetchArticles();
   }
 
   async updateArticle() {
-    const { title, tag, author, date, imgUrl, content, id } = this.state.selectedArticle;
-    const body = { title, tag, author, date, imgUrl, content, id };
-    const response = await fetch(`http://localhost:3000/articles/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
+
   }
 
   render() {

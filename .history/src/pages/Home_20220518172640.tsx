@@ -48,8 +48,6 @@ class Home extends Component<Props, State> {
     this.handleDateInputChange = this.handleDateInputChange.bind(this);
     this.handleUrlInputChange = this.handleUrlInputChange.bind(this);
     this.handleContentInputChange = this.handleContentInputChange.bind(this);
-    this.addArticle = this.addArticle.bind(this);
-    this.updateArticle = this.updateArticle.bind(this);
   }
 
   async componentDidMount() {
@@ -125,37 +123,9 @@ class Home extends Component<Props, State> {
     this.setState({ selectedArticle: { ...this.state.selectedArticle, imgUrl: value } });
   }
 
-  handleContentInputChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
+  handleContentInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     const value = event.target.value;
     this.setState({ selectedArticle: { ...this.state.selectedArticle, content: value } });
-  }
-
-  async addArticle() {
-    const { title, tag, author, date, imgUrl, content } = this.state.selectedArticle;
-    const body = { title, tag, author, date, imgUrl, content };
-    const response = await fetch(`http://localhost:3000/articles`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-    const json = await response.json();
-    console.log(json);
-    this.closeModal();
-    this.fetchArticles();
-  }
-
-  async updateArticle() {
-    const { title, tag, author, date, imgUrl, content, id } = this.state.selectedArticle;
-    const body = { title, tag, author, date, imgUrl, content, id };
-    const response = await fetch(`http://localhost:3000/articles/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
   }
 
   render() {
@@ -180,18 +150,7 @@ class Home extends Component<Props, State> {
         <NavBar/>
         <AddBtn openModal={this.openModal}/>
         {articleList}
-        <Modal 
-          isModalOpen={isModalOpen}
-          article={selectedArticle} 
-          closeModal={this.closeModal}
-          handleTitleInputChange={this.handleTitleInputChange}
-          handleTagInputChange={this.handleTagInputChange}
-          handleAuthorInputChange={this.handleAuthorInputChange}
-          handleDateInputChange={this.handleDateInputChange}
-          handleUrlInputChange={this.handleUrlInputChange}
-          handleContentInputChange={this.handleContentInputChange}
-          addArticle={this.addArticle}
-          updateArticle={this.updateArticle} ></Modal>
+        <Modal isModalOpen={isModalOpen} article={selectedArticle} closeModal={this.closeModal} ></Modal>
       </div>
     )
   }

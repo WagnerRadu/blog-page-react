@@ -48,8 +48,6 @@ class Home extends Component<Props, State> {
     this.handleDateInputChange = this.handleDateInputChange.bind(this);
     this.handleUrlInputChange = this.handleUrlInputChange.bind(this);
     this.handleContentInputChange = this.handleContentInputChange.bind(this);
-    this.addArticle = this.addArticle.bind(this);
-    this.updateArticle = this.updateArticle.bind(this);
   }
 
   async componentDidMount() {
@@ -142,20 +140,7 @@ class Home extends Component<Props, State> {
     });
     const json = await response.json();
     console.log(json);
-    this.closeModal();
-    this.fetchArticles();
-  }
-
-  async updateArticle() {
-    const { title, tag, author, date, imgUrl, content, id } = this.state.selectedArticle;
-    const body = { title, tag, author, date, imgUrl, content, id };
-    const response = await fetch(`http://localhost:3000/articles/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
+    this.closeModal;
   }
 
   render() {
@@ -189,9 +174,7 @@ class Home extends Component<Props, State> {
           handleAuthorInputChange={this.handleAuthorInputChange}
           handleDateInputChange={this.handleDateInputChange}
           handleUrlInputChange={this.handleUrlInputChange}
-          handleContentInputChange={this.handleContentInputChange}
-          addArticle={this.addArticle}
-          updateArticle={this.updateArticle} ></Modal>
+          handleContentInputChange={this.handleContentInputChange} ></Modal>
       </div>
     )
   }
