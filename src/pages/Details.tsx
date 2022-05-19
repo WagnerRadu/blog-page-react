@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import { ArticleModel } from './Home';
 import Article from '../components/Article';
+import Footer from '../components/Footer';
 
 export default function Details() {
     let { articleId } = useParams();
@@ -56,6 +57,7 @@ export default function Details() {
                     <p className='text'>{text2}</p>
                 </article>
             )}
+            <Footer previous={'previous article'} next={'next article'} />
         </div>
     )
 }

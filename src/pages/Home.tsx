@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import AddBtn from '../components/AddBtn';
 import Article from '../components/Article';
+import Footer from '../components/Footer';
 import Modal from '../components/Modal';
 import NavBar from '../components/NavBar';
 
@@ -207,6 +208,7 @@ class Home extends Component<Props, State> {
           handleContentInputChange={this.handleContentInputChange}
           addArticle={this.addArticle}
           updateArticle={this.updateArticle} ></Modal>
+        <Footer previous={'previous'} next={'next'} />
       </div>
     )
   }
