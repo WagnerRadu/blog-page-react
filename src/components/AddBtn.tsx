@@ -1,13 +1,14 @@
 import React from 'react'
 
 type Props = {
-  openModal: () => void,
+  triggeredFunction?: () => void,
+  textContent: string
 }
 
-export default function AddBtn({openModal}: Props) {
+export default function AddBtn({ triggeredFunction, textContent }: Props) {
   return (
     <div className="button-container">
-            <button className="button" id="addButton" onClick={openModal}>+ ADD ARTICLE</button>
-        </div>
+      <button className="button" id="addButton" onClick={triggeredFunction}>{textContent}</button>
+    </div>
   )
 }

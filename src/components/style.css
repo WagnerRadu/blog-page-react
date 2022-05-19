@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cardo&family=Montserrat:ital@0;1&display=swap');
+
 :root {
     --title-font: 'Montserrat', sans-serif;
     --h1-font-size: 46px;
@@ -43,6 +45,12 @@
     display: flex;
     justify-content: flex-end;
     margin: 130px 0 90px 0;
+}
+
+.button-container--centered {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0 -90px 0;
 }
 
 .button {
@@ -132,6 +140,7 @@
     text-align: justify;
     margin-left: auto;
     margin-right: auto;
+    margin: 80px auto 0 auto;
 }
 
 .footer {
@@ -229,4 +238,23 @@
 .modal-active {
     visibility: visible;
     opacity: 1;
+}
+
+.link {
+    text-decoration: none;
+}
+
+
+.saying {
+    font-family: var(--title-font);
+    font-size: var(--h3-font-size);
+    font-style: italic; /* too lazy to  */
+    color: var(--black);
+    line-height: 30px;
+    box-sizing: border-box;
+    padding-top: 105px;
+    padding-bottom: 105px;
+    background-color: var(--pink);
+    margin: 75px 0 75px 0;
+    text-align: center;
 }

@@ -192,7 +192,7 @@ class Home extends Component<Props, State> {
     return (
       <div className='container'>
         <NavBar/>
-        <AddBtn openModal={this.openModal}/>
+        <AddBtn triggeredFunction={this.openModal} textContent={"+ ADD ARTICLE"}/>
         {articleList}
         <Modal 
           isModalOpen={isModalOpen}

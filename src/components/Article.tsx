@@ -1,5 +1,7 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import { ArticleModel } from '../pages/Home';
+import AddBtn from './AddBtn';
 import "./style.css"
 
 type Props = {
@@ -30,7 +32,10 @@ export default function Article({title, tag, author, date, imgUrl, saying, conte
         <button className='edit-button' onClick={() => deleteArticle(id)}>Delete</button>
       </div>
       <img className='image' src={imgUrl} alt=""/>
-      <p className='text'>{content}</p>
+      <p className='text'>{content.slice(0, 1000)}</p>
+      <Link to={`/details/${id}`} className="link button-container--centered">
+          <AddBtn textContent={'READ MORE'}/>
+      </Link>
     </article>
   )
 }
