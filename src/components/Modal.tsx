@@ -10,6 +10,7 @@ type Props = {
     handleAuthorInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
     handleDateInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
     handleUrlInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
+    handleSayingInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
     handleContentInputChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
     addArticle: () => void;
     updateArticle: () => void;
@@ -24,6 +25,7 @@ export default function Modal({
     handleAuthorInputChange,
     handleDateInputChange,
     handleUrlInputChange,
+    handleSayingInputChange,
     handleContentInputChange,
     addArticle,
     updateArticle
@@ -37,7 +39,8 @@ export default function Modal({
                     <input className="modal-form" type="text" placeholder="Please enter tag" value={article.tag} onChange={handleTagInputChange} />
                     <input className="modal-form" type="text" placeholder="Please enter author" value={article.author} onChange={handleAuthorInputChange} />
                     <input className="modal-form" type="text" placeholder="Please enter date" value={article.date} onChange={handleDateInputChange} />
-                    <input className="modal-form url-form" type="text" placeholder="Please enter image url" value={article.imgUrl} onChange={handleUrlInputChange} />
+                    <input className="modal-form" type="text" placeholder="Please enter image url" value={article.imgUrl} onChange={handleUrlInputChange} />
+                    <input className="modal-form" type="text" placeholder="Please enter saying" value={article.saying} onChange={handleSayingInputChange} />
                     <textarea className="modal-form content-form" placeholder="Please enter content" value={article.content} onChange={handleContentInputChange}></textarea>
                 </div>
                 <div className="modal-button-container">
