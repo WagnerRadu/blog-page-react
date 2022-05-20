@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import AddBtn from '../components/AddBtn';
 import Article from '../components/Article';
-import Footer from '../components/Footer';
 import Modal from '../components/Modal';
 import NavBar from '../components/NavBar';
 
@@ -11,35 +10,39 @@ type State = {
   articles: ArticleModel[];
   isModalOpen: boolean;
   selectedArticle: ArticleModel;
+  startIndex: number;
+  endIndex: number;
 }
 
 export type ArticleModel = {
-    title: string;
-    tag: string;
-    author: string;
-    date: string;
-    imgUrl: string;
-    saying: string;
-    content: string;
-    id: number;
+  title: string;
+  tag: string;
+  author: string;
+  date: string;
+  imgUrl: string;
+  saying: string;
+  content: string;
+  id: number;
 }
 
 class Home extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-        articles: [],
-        isModalOpen: false,
-        selectedArticle: {
-          title: "",
-          tag: "",
-          author: "",
-          date: "",
-          imgUrl: "",
-          saying: "",
-          content: "",
-          id: 0
-        }
+      articles: [],
+      isModalOpen: false,
+      selectedArticle: {
+        title: "",
+        tag: "",
+        author: "",
+        date: "",
+        imgUrl: "",
+        saying: "",
+        content: "",
+        id: 0
+      },
+      startIndex: 0,
+      endIndex: 2,
     };
     this.closeModal = this.closeModal.bind(this);
     this.openModal = this.openModal.bind(this);
@@ -54,6 +57,9 @@ class Home extends Component<Props, State> {
     this.handleContentInputChange = this.handleContentInputChange.bind(this);
     this.addArticle = this.addArticle.bind(this);
     this.updateArticle = this.updateArticle.bind(this);
+    this.goToPrev = this.goToPrev.bind(this);
+    this.goToNext = this.goToNext.bind(this);
+    this.updateDisplayIndex = this.updateDisplayIndex.bind(this);
   }
 
   async componentDidMount() {
@@ -89,7 +95,7 @@ class Home extends Component<Props, State> {
 
   editArticle(article: ArticleModel) {
     console.log(article);
-    
+
     this.setState({ selectedArticle: article, isModalOpen: true });
   }
 
@@ -156,7 +162,7 @@ class Home extends Component<Props, State> {
     this.fetchArticles();
   }
 
-  async updateArticle() { 
+  async updateArticle() {
     const { title, tag, author, date, imgUrl, saying, content, id } = this.state.selectedArticle;
     const body = { title, tag, author, date, imgUrl, saying, content, id };
     const response = await fetch(`http://localhost:3000/articles/${id}`, {
@@ -172,32 +178,64 @@ class Home extends Component<Props, State> {
     this.fetchArticles();
   }
 
+  updateDisplayIndex() {
+    const { articles, startIndex, endIndex } = this.state;
+
+    if (startIndex === articles.length && articles.length > 0) {
+      this.setState({ startIndex: startIndex - 3, endIndex: endIndex - 3 });
+    }
+
+  }
+
+  goToPrev() {
+    const { startIndex, endIndex } = this.state;
+
+    this.setState({
+      startIndex: startIndex - 3,
+      endIndex: endIndex - 3,
+    });
+  }
+
+  goToNext() {
+    const { startIndex, endIndex } = this.state;
+    this.setState({
+      startIndex: startIndex + 3,
+      endIndex: endIndex + 3,
+    });
+  }
+
+  static getNoArticles() {
+    return 
+  }
+
   render() {
-    const { isModalOpen, articles, selectedArticle } = this.state;
-    const articleList = articles.map((article: ArticleModel) => (
-        <Article
-            key={article.id}
-            title={article.title} 
-            tag={article.tag} 
-            author={article.author} 
-            date={article.date} 
-            imgUrl={article.imgUrl} 
-            saying={article.saying}
-            content={article.content} 
-            id={article.id} 
-            deleteArticle={this.deleteArticle}
-            editArticle={this.editArticle}
-        />
-      ));
+    const { isModalOpen, articles, selectedArticle, startIndex, endIndex } = this.state;
+    const articleList = articles
+    .filter((article, index) => index >= startIndex && index <= endIndex)
+    .map((article: ArticleModel) => (
+      <Article
+        key={article.id}
+        title={article.title}
+        tag={article.tag}
+        author={article.author}
+        date={article.date}
+        imgUrl={article.imgUrl}
+        saying={article.saying}
+        content={article.content}
+        id={article.id}
+        deleteArticle={this.deleteArticle}
+        editArticle={this.editArticle}
+      />
+    ));
 
     return (
       <div className='container'>
-        <NavBar/>
-        <AddBtn triggeredFunction={this.openModal} textContent={"+ ADD ARTICLE"}/>
+        <NavBar />
+        <AddBtn triggeredFunction={this.openModal} textContent={"+ ADD ARTICLE"} />
         {articleList}
-        <Modal 
+        <Modal
           isModalOpen={isModalOpen}
-          article={selectedArticle} 
+          article={selectedArticle}
           closeModal={this.closeModal}
           handleTitleInputChange={this.handleTitleInputChange}
           handleTagInputChange={this.handleTagInputChange}
@@ -208,7 +246,14 @@ class Home extends Component<Props, State> {
           handleContentInputChange={this.handleContentInputChange}
           addArticle={this.addArticle}
           updateArticle={this.updateArticle} ></Modal>
-        <Footer previous={'previous'} next={'next'} />
+        <div className='footer'>        
+          <button onClick={this.goToPrev} disabled={startIndex <= 0} className='footer-button' >
+            previous
+          </button>
+          <button onClick={this.goToNext} disabled={endIndex >= articles.length - 1} className='footer-button' >
+            next
+          </button>
+        </div>
       </div>
     )
   }
