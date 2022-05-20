@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import { ArticleModel } from './Home';
 import Article from '../components/Article';
-import Footer from '../components/Footer';
 
 export default function Details() {
     let { articleId } = useParams();
@@ -26,7 +25,7 @@ export default function Details() {
         let before = text.lastIndexOf(' ', middle);
         let after = text.indexOf(' ', middle + 1);
 
-        if(middle - before < after - middle) {
+        if (middle - before < after - middle) {
             middle = before;
         } else {
             middle = after;
@@ -35,10 +34,10 @@ export default function Details() {
         let text1 = text.substring(0, middle);
         let text2 = text.substring(middle + 1);
 
-        return {text1: text1, text2: text2}
+        return { text1: text1, text2: text2 }
     }
 
-    const { text1, text2 } = article !== null ? splitText(article.content) : {text1:"", text2:""};
+    const { text1, text2 } = article !== null ? splitText(article.content) : { text1: "", text2: "" };
 
     return (
         <div className='container'>
@@ -57,7 +56,20 @@ export default function Details() {
                     <p className='text'>{text2}</p>
                 </article>
             )}
-            <Footer previous={'previous article'} next={'next article'} />
+            {article !== null && articleId && (
+                <div className='footer'>
+                    <Link to={`/details/${parseInt(articleId) - 1}`}>
+                        <button disabled={typeof articleId === 'string' && parseInt(articleId) <= 0} className='footer-button' >
+                            previous article
+                        </button>
+                    </Link>
+                    <Link to={`/details/${parseInt(articleId) + 1}`}>
+                        <button className='footer-button' > {/* didn't find a way to pass articles length for disable */}
+                            next article
+                        </button>
+                    </Link>
+                </div>
+            )}
         </div>
     )
 }
